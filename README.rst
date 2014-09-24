@@ -1,26 +1,33 @@
+
+
+StringBoom
+============
+
+
+Synopsis
+--------
+String-related functions for (1) regex convenience functions, and (2) partial-application of string formatting/templates.
+
+Code Example
+------------
+As an example of Template(), for partially-applying str.format():
+
+.. code:: python
+
+	Template('DELETE FROM {table} WHERE {pkey} IN ({chunk})').format(table='import')
+	
+	'DELETE FROM import WHERE {pkey} IN ({chunk})'
+
+
+
+
 ~~BEWARE~~
 ===================================
 Everything below is un-filled-in template-boilerplate.
 
 ==============================
 
-PACKAGE-NAME
-============
-
-
-Synopsis
---------
-At the top of the file there should be a short introduction and/ or overview that explains **what** the project is. This description should match descriptions added for package managers (Gemspec, package.json, etc.)
-
-Code Example
-------------
-Show what the library does as concisely as possible, developers should be able to figure out **how** your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.
-
-.. code:: python
-
-	import package
-	output = package.function("arguments")
-	print(output)
+@todo: Add in examples from regex.py
 
 Motivation
 -----------

@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 import string
+from .nonbindingmethod import NonBindingMethod
 
 __all__ = ['StringTemplate']
 
@@ -7,6 +8,7 @@ __all__ = ['StringTemplate']
 class StringTemplate(str):
     """String - used for formatting statements. Unlike standard strings,
     it allows partial-appliction of formatting."""
+    @NonBindingMethod
     def format(self, *args, **kwargs):
         """Convert args & kwargs to forms supporting partial-application,
         and invoke formatting operation (vformat).
@@ -14,6 +16,7 @@ class StringTemplate(str):
         return StringTemplate(
             self.vformat(FormatList(args), FormatDict(kwargs))
         )
+    @NonBindingMethod
     def vformat(self, fargs, fkwargs):
         """Invoke vformat from string, on self.
         Returns string, not StringTemplate."""

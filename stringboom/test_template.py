@@ -4,6 +4,9 @@ import unittest
 from stringboom.template import *
 
 
+
+
+
 class StringTemplateTests(unittest.TestCase):
     def setUp(self):
         self.raw = 'DELETE FROM {table} WHERE {pkey} IN ({chunk})'
@@ -14,6 +17,8 @@ class StringTemplateTests(unittest.TestCase):
             'pkey': 'id',
             'chunk': '1001, 1002, 1003'
         }
+
+        
     def test_template_typecheck(self):
         format_result = self.template.format(table='temp_import')
         vformat_result = self.template.vformat((), self.keywords)
@@ -67,8 +72,28 @@ class StringTemplateTests(unittest.TestCase):
             self.template.format(**self.keywords),
             self.complete
         )
+    def test_nonbindingmethod(self):
+        self.assertEquals(
+            StringTemplate.format(self.raw, **self.keywords),
+            self.complete
+        )
+        self.assertEquals(
+            StringTemplate.vformat(self.raw, (), self.keywords),
+            self.complete
+        )
     def test_positionals(self):
-        pass
+        self.assertEquals(
+            StringTemplate("{0} went to the {1}").format('John'),
+            'John went to the {1}'
+        )
+        self.assertEquals(
+            StringTemplate("{0} went to the {1}").format('John', 'store'),
+            'John went to the store'
+        )
+        self.assertEquals(
+            StringTemplate("{0} went to the {1}").format(*['John', 'store']),
+            'John went to the store'
+        )
 
 
 if __name__ == "__main__":
