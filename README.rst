@@ -10,7 +10,7 @@ Code Example
 -------------
 As an example of StringTemplate, for partially-applying str.format.
 
-.code:: python
+.. code:: python
 
 	StringTemplate('DELETE FROM {table} WHERE {pkey} IN ({chunk})').format(table='import')
 	# => 'DELETE FROM import WHERE {pkey} IN ({chunk})'
