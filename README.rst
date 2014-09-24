@@ -19,7 +19,7 @@ Regex functions act as simple convenience functions around core regex functions.
 
 .. code:: python
 
-re_find('a.', 'a aa bbbac')		# 'a '
+	re_find('a.', 'a aa bbbac')		# 'a '
 	re_find('E', 'a aa bbbac')		# Not found --> returns None
 	
 	# All standard regex syntax applies:
