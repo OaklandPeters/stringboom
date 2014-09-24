@@ -8,9 +8,7 @@ String-related functions for (1) regex convenience functions, and (2) partial-ap
 
 StringTemplate
 ---------------------
-As an example of StringTemplate, for partially-applying str.format.
-
-.. code:: python
+As an example of StringTemplate, for partially-applying str.format::
 
 	template = StringTemplate('DELETE FROM {table} WHERE {pkey} IN ({chunk})')
 	result = template.format(table='import')
@@ -22,9 +20,7 @@ As an example of StringTemplate, for partially-applying str.format.
 Extended Regex
 --------
 
-Core regex functions (``re_iter``, ``re_find``, ``re_all``, and ``re_test``) act as simple convenience functions around standard python regex functionality (from ``re``).
-
-.. code:: python
+Core regex functions (``re_iter``, ``re_find``, ``re_all``, and ``re_test``) act as simple convenience functions around standard python regex functionality (from ``re``)::
 
 	re_find('a.', 'a aa bbbac')		# 'a '
 	re_find('E', 'a aa bbbac')		# Not found --> returns None
@@ -46,9 +42,7 @@ Core regex functions (``re_iter``, ``re_find``, ``re_all``, and ``re_test``) act
 	# bb
 	# ac
 
-They also provide support for a more functional-style of programming, via ``make``, which constructs partial-functions
-
-.. code:: python
+They also provide support for a more functional-style of programming, via ``make``, which constructs partial-functions::
 
     assert re_find('a.', 'a aa bbbac') == make(re_find, 'a.')('a aa bbac')
     phrases = [
