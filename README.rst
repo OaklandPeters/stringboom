@@ -20,7 +20,8 @@ As an example of StringTemplate, for partially-applying str.format.
 
 
 Extended Regex
------------------------
+--------
+
 Core regex functions (``re_iter``, ``re_find``, ``re_all``, and ``re_test``) act as simple convenience functions around standard python regex functionality (from ``re``).
 
 .. code:: python
