@@ -6,8 +6,8 @@ Synopsis
 ---------
 String-related functions for (1) regex convenience functions, and (2) partial-application of string formatting/templates.
 
-Code Example
--------------
+StringTemplate
+---------------------
 As an example of StringTemplate, for partially-applying str.format.
 
 .. code:: python
@@ -18,6 +18,9 @@ As an example of StringTemplate, for partially-applying str.format.
 	result.format(pkey='id', chunk='1001, 1002')
 	# => 'DELETE FROM import WHERE id IN (1001, 1002)'
 
+
+Extended Regex
+-----------------------
 Core regex functions (``re_iter``, ``re_find``, ``re_all``, and ``re_test``) act as simple convenience functions around standard python regex functionality (from ``re``).
 
 .. code:: python
@@ -56,3 +59,22 @@ They also provide support for a more functional-style of programming, via ``make
     re_filter = make(re_test, r'\bt\S*') # Does it contain a word begining with 't'?
     filter(re_filter, phrases)
     # => ['Long live the king!', 'I think I hear them. Stand, ho! Whos there?']
+
+API
+-------------
+``re_iter``, ``re_find``, ``re_all``, and ``re_test`` have the following argument form::
+
+    def re_function(regex, _string, flags=0):
+
+* **regex:** raw-string or string. This is eventually passed to `re.compile(regex, flags) <https://docs.python.org/2/library/re.html#re.compile/>`_
+* **_string:** the input string to be tested.
+* **flags:** optional. See specification following `re.compile <https://docs.python.org/2/library/re.html#re.DEBUG/>`_
+
+``make()`` is very simple, with the following structure::
+
+	def make(re_function, regex, flags=0):
+		return functools.partial(re_func, regex, flags=flags)
+		
+License (MIT)
+-----------
+Copyright (c) 2014, Oakland John Peters.
