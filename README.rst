@@ -8,15 +8,16 @@ String-related functions for (1) regex convenience functions, and (2) partial-ap
 
 Code Example
 -------------
-As an example of Template(), for partially-applying str.format().
+As an example of StringTemplate, for partially-applying str.format.
 
-.. code:: python
+. code:: python
 
-	Template('DELETE FROM {table} WHERE {pkey} IN ({chunk})').format(table='import')
+	StringTemplate('DELETE FROM {table} WHERE {pkey} IN ({chunk})').format(table='import')
 	# => 'DELETE FROM import WHERE {pkey} IN ({chunk})'
 
 Regex functions act as simple convenience functions around core regex functions.
 
-.. code:: python
-	re_find('a.', 'a aa bbbac')		# 'a '
-	re_find('E', 'a aa bbbac')		# Not found --> returns None
+. code:: python
+
+	re_find('a.', 'a aa bbbac')
+	re_find('E', 'a aa bbbac')
