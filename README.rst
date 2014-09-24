@@ -38,3 +38,18 @@ Regex functions act as simple convenience functions around core regex functions.
 	# b
 	# bb
 	# ac
+
+They also provide support for a more functional-style of programming, via ``make``, which constructs partial-functions:
+
+.. code:: python
+	assert re_find('a.', 'a aa bbbac') == make(re_find, 'a.')('a aa bbac')
+
+	phrases = [
+		'Nay, answer me: stand, and unfold yourself.',
+		'Long live the king!',
+		'You come most carefully upon your hour.',
+		'I think I hear them. Stand, ho! Whos there?'
+	]
+	re_filter = make(re_test, r'\bt\S*') # Does it contain a word begining with 't'?
+	filter(re_filter, phrases)
+	# => ['Long live the king!', 'I think I hear them. Stand, ho! Whos there?']
