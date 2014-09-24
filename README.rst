@@ -28,7 +28,7 @@ Regex functions act as simple convenience functions around core regex functions.
 	re_all('a.', 'a aa bbbac')		# ['a ', 'aa', 'ac']
 	
 	re_test('^a', 'a aa bbbac')		# True
-    re_test('a$', 'a aa bbbac')		# False
+	re_test('a$', 'a aa bbbac')		# False
 
 	for elm in re_iter('..', 'a aa bbbac'):
 		print(elm)
