@@ -15,47 +15,62 @@ As an example of Template(), for partially-applying str.format():
 .. code:: python
 
 	Template('DELETE FROM {table} WHERE {pkey} IN ({chunk})').format(table='import')
+	# => 'DELETE FROM import WHERE {pkey} IN ({chunk})'
+
+Regex functions act as simple convenience functions around core regex functions:
+
+.. code:: python
+	re_find('a.', 'a aa bbbac')		# 'a '
+	re_find('E', 'a aa bbbac')		# Not found --> returns None
 	
-	'DELETE FROM import WHERE {pkey} IN ({chunk})'
+	# All standard regex syntax applies:
+	re_find('^a', 'a aa bbbac')		# 'a'
+	re_find('a$', 'a aa bbbac')		# Not found --> returns None
+	
+	re_all('a.', 'a aa bbbac')		# ['a ', 'aa', 'ac']
+	
+	re_test('^a', 'a aa bbbac')		# True
+    re_test('a$', 'a aa bbbac')		# False
 
+	for elm in re_iter('..', 'a aa bbbac'):
+		print(elm)
+	# a 
+	# aa
+	# b
+	# bb
+	# ac
 
+They also provide support for a more functional-style of programming, via ``make``, which constructs partial-functions:
 
+.. code:: python
+	assert re_find('a.', 'a aa bbbac') == make(re_find, 'a.')('a aa bbac')
 
-~~BEWARE~~
-===================================
-Everything below is un-filled-in template-boilerplate.
+	phrases = [
+		'Nay, answer me: stand, and unfold yourself.',
+		'Long live the king!',
+		'You come most carefully upon your hour.',
+		'I think I hear them. Stand, ho! Whos there?'
+	]
+	re_filter = make(re_test, r'\bt\S*') # Does it contain a word begining with 't'?
+	filter(re_filter, phrases)
+	# => ['Long live the king!', 'I think I hear them. Stand, ho! Whos there?']
 
-==============================
-
-@todo: Add in examples from regex.py
-
-Motivation
------------
-A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
-
-Installation
-------------
-Provide code examples and explanations of how to get the project.
-
-API Reference
+API
 -------------
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
+``re_iter``, ``re_find``, ``re_all``, and ``re_test`` have the following argument form:
+	def re_function(regex, _string, flags=0):
 
-Tests
+Where:	
+	regex: raw-string or string. This is eventually passed to `re.compile(regex, flags) <https://docs.python.org/2/library/re.html#re.compile/>`_
+	_string: the input string to be tested
+	flags: optional. See specification following `re.compile <https://docs.python.org/2/library/re.html#re.DEBUG/>`_
+
+``make()`` is very simple, with the following structure:
+
+.. code:: python
+	def make(re_function, regex, flags=0):
+		return functools.partial(re_func, regex, flags=flags)
+		
+License (MIT)
 -----------
-Describe and show how to run the tests with code examples.
-
-Contributors
-------------
-Let people know how they can dive into the project, include important links to things like issue trackers, irc, twitter accounts if applicable.
-
-License
------------
-A short snippet describing the license (MIT, Apache, etc.)
-
-
-Actual Attribution
---------------------
-This template was based on a `README.md <https://gist.github.com/jxson/1784669/>`_ by `Jason Campbell <https://gist.github.com/jxson/>`_ on Github.
-
-For more information on ReStructuredText (RST) formatting, see the `QuickRef <http://docutils.sourceforge.net/docs/user/rst/quickref.html/>`_ and the useful online RST editor/linter at http://rst.ninjs.org/.
+Copyright (c) 2014, Oakland John Peters.

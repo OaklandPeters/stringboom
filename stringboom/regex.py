@@ -5,7 +5,6 @@ from __future__ import absolute_import
 import re
 import operator
 import functools
-#from .shared import identity
 
 __all__ = ['re_iter', 're_find', 're_all', 're_test', 'make']
 
@@ -29,9 +28,11 @@ def re_find(regex, _string, flags=0):
     return _first(re_iter(regex, _string, flags))
 
 def re_all(regex, _string, flags=0):
+    """Return all matching groups."""
     return list(re_iter(regex, _string, flags))
 
 def re_test(regex, _string, flags=0):
+    """Predicate. Return True if _string matches regex."""
     try:
         re_iter(regex, _string, flags).next()
         return True
@@ -42,24 +43,12 @@ def re_test(regex, _string, flags=0):
 #        Convenience & Partial Functions
 #==============================================================================
 def make(re_func, regex, flags=0):
-    """Partial-functions for regex-related functions.
-    re_iter_finder('aa') == make(re_iter, 'aa')
+    """Function factory. Constructs partial-functions for 
+    regex-related functions.
+    
     make(re_iter, 'aa')('aabbbaaa') == re_iter('aa', 'aabbbaaa')
     """
     return functools.partial(re_func, regex, flags=flags)
-# def re_iter_finder(regex, flags=0):
-#     #return functools.partial(re_iter, regex, flags=flags)
-#     return make(re_iter, regex, flags)
-# def re_finder(regex, flags=0):
-#     """Factory; create functions to find regex inside a given string."""
-#     #return functools.partial(re_find, regex, flags=flags)
-#     return make(re_find, regex, flags)
-# def re_all_finder(regex, flags=0):
-#     #return functools.partial(re_all, regex, flags=flags)
-#     return make(re_all, regex, flags)
-# def re_tester(regex, flags=0):
-#     #return functools.partial(re_test, regex, flags=flags)
-#     return make(re_test, regex, flags)
 
 
 #==============================================================================
